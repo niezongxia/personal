@@ -1,0 +1,1 @@
+python D:/Users/Desktop/upfile.py 22.188.192.162 ydweb D:/Users/Desktop/upload
