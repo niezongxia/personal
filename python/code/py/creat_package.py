@@ -599,4 +599,3 @@ elif task_type == 'MLIFE-APPS':
 
 #调用关闭窗口倒计时
 Windows_close(300)
->>>>>>> e03e7e280d6a4bc9498875f2b37d0f49ef931195
