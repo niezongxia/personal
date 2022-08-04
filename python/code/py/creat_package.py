@@ -464,12 +464,9 @@ if task_type == 'MLIFE-PHONE':
                 document2 = docx.Document(auto_install_model)
                 document2 = check_and_change(document2, replace_dict, auto_install)
                 print('安装手册已生成。')
-<<<<<<< HEAD
+
 #判断为MLIFE-APPS版本
 elif task_type == 'MLIFE-APPS':
-=======
-else:
->>>>>>> e03e7e280d6a4bc9498875f2b37d0f49ef931195
     #读取目录获取执行码清单备用
     sql_dir = code_dir+code_list[0]
     war_dir = code_dir+code_list[1]
@@ -522,11 +519,7 @@ else:
     for e in n_e:
         check_result.append(e[1])
 
-<<<<<<< HEAD
     ####  读取excel表生成验证清单   ######
-=======
-####  读取excel表生成验证清单   ######
->>>>>>> e03e7e280d6a4bc9498875f2b37d0f49ef931195
     read_ebook(excel_check_path,task_type.split("-")[0])#读取指定sheet页
     check_combine(check_result,HY_check_list,HY_combine_list)
     check_combine(check_result,HSH_check_list,HSH_combine_list)
@@ -604,9 +597,6 @@ else:
                     wb.save(auto_checklist)
                     print('缤纷生活checklist已生成，请参照检查项逐一检查！！！')
 
-<<<<<<< HEAD
-
-=======
 #调用关闭窗口倒计时
 Windows_close(300)
 >>>>>>> e03e7e280d6a4bc9498875f2b37d0f49ef931195
