@@ -31,5 +31,5 @@ filePathtext = sys.argv[1].replace('\\','/')
 filePathList = filePathtext.split(',')
 fileListFunc(filePathList)
 
-print("格式识别已全部完成,请到以下路劲中查看识别结果："+str(home)+"code_type.csv"))
+print("格式识别已全部完成,请到以下路劲中查看识别结果："+str(home)+"code_type.csv")
 Windows_close(60)
