@@ -32,7 +32,7 @@ dateFormat=xlwt.XFStyle()
 dateFormat.num_format_str='yyyy/mm/dd'
 
 #open file
-rb=xlrd.open_workbook(filename,formatting_info=True)#)#
+rb=xlrd.open_workbook(model,formatting_info=True)#)#
 rows=rb.sheets()[0].nrows#获取已有行数
 #copy rb
 wb=copy(rb)
@@ -56,13 +56,15 @@ def setOutCell(outSheet, col, row, value):
 #print type(wb)
 #get first sheet
 outsheet=wb.get_sheet(0)
-for rr in(rows-2):
-    row=rr+2
-    outsheet.write(row,6,datetime.datetime.strptime(filedate, '%Y-%m-%d'),dateFormat)
-    outsheet.write(row,7,datetime.datetime.strptime(filedate, '%Y-%m-%d'),dateFormat)
-
+"""
+for rr in range(rows-3):
+    row=rr+3
+"""
+outsheet.write(14,6,datetime.datetime.strptime(filedate, '%Y%m%d'),dateFormat)
+print(datetime.datetime.strptime(filedate, '%Y%m%d'),dateFormat)
+outsheet.write(14,7,datetime.datetime.strptime(filedate, '%Y%m%d'),dateFormat)
 
 #print type(sheet)
-#os.remove(filename)
+os.remove(filename)
 wb.save(filename)
 print("写入成功")
