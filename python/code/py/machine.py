@@ -1,11 +1,11 @@
-#write.py
-import os,sys,xlrd,xlwt
-from xlutils.copy import copy
+# -*- coding=utf-8 -*-
+import os,sys
+import openpyxl
 import datetime
 import datetime as dt
 from datetime import date
 
-model = './缤纷生活 - 测试组设备管理-模版.xls'
+model = './缤纷生活 - 测试组设备管理-模版.xlsx'
 
 while True:
     Date = input('请输入需要生成文档的截止日期(不输直接回车默认当前日期）,形如 YYYYMMDD ：')
@@ -25,46 +25,26 @@ while True:
         else:
             print("输入格式不合法！请按照样例格式输入日期！")
 
-filename='./缤纷生活 - 测试组设备管理-'+filedate+'.xls'#'C:/xampp/htdocs/ewm/ins/war_install_record_report.xls'#
-print(filename)
+filename=model.replace('模版',str(filedate))
+print('已生成文件名：',filename)
 
-dateFormat=xlwt.XFStyle()
-dateFormat.num_format_str='yyyy/mm/dd'
+cha=datetime.datetime.strptime('20220819', '%Y%m%d')-datetime.datetime.strptime('20220815', '%Y%m%d')
 
-#open file
-rb=xlrd.open_workbook(model,formatting_info=True)#)#
-rows=rb.sheets()[0].nrows#获取已有行数
-#copy rb
-wb=copy(rb)
+# 1: 载入文件
+workbook = openpyxl.load_workbook(model)
+worksheet = workbook.worksheets[1]
+print('读取',str(worksheet),'完成')
+# 2： 第一列前插入数据
+for index, row in enumerate(worksheet.rows):
+    if index in [0,1,2,3]:
+        print('已跳过第',str(index+1),'行...')
+        pass
+    else:
+        print('正在写入第',str(index+1),'行...')
+        worksheet.cell(index, 7, datetime.datetime.strptime(filedate, '%Y%m%d')-cha)
+        worksheet.cell(index, 8, datetime.datetime.strptime(filedate, '%Y%m%d'))
 
-#本文重点，该函数中定义：对于没有任何修改的单元格，保持原有格式。
-def setOutCell(outSheet, col, row, value):
-    def _getOutCell(outSheet, colIndex, rowIndex):#Change cell value without changing formatting.
-        row = outSheet._Worksheet__rows.get(rowIndex)#HACK: Extract the internal xlwt cell representation.
-        if not row: return None
-        cell = row._Row__cells.get(colIndex)
-        return cell
- 
-    
-    previousCell = _getOutCell(outSheet, col, row)# HACK to retain cell style.
-    outSheet.write(row, col, value)# END HACK, PART I
-    if previousCell:# HACK, PART II
-        newCell = _getOutCell(outSheet, col, row)
-        if newCell:
-            newCell.xf_idx = previousCell.xf_idx
+# 枚举出来是tuple类型，从 0 开始计数
+workbook.save(filename)
 
-#print type(wb)
-#get first sheet
-outsheet=wb.get_sheet(0)
-"""
-for rr in range(rows-3):
-    row=rr+3
-"""
-outsheet.write(14,6,datetime.datetime.strptime(filedate, '%Y%m%d'),dateFormat)
-print(datetime.datetime.strptime(filedate, '%Y%m%d'),dateFormat)
-outsheet.write(14,7,datetime.datetime.strptime(filedate, '%Y%m%d'),dateFormat)
-
-#print type(sheet)
-os.remove(filename)
-wb.save(filename)
-print("写入成功")
+print("写入完毕")
